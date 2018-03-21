@@ -4,6 +4,22 @@
 # By Zhengping, March 20, 2018
 
 from src.filename_parse import TimePeriod, Filename, TripleKey
+import os
+
+
+def file_listing(location, key):
+    """
+    Find all files in Location that contains "key"
+    :param location:
+    :param key:
+    :return: a list of filename which all contain key.
+    """
+    selected_file_list = []
+    for filename in os.listdir(location):
+        if key in filename:
+            selected_file_list.append(filename)
+
+    return selected_file_list
 
 if __name__ == '__main__':
     rdp_descriptor_filename = "../data/rdp_conn_comb/2018-02-01"

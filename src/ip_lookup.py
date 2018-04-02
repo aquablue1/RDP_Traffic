@@ -75,12 +75,12 @@ class ResearchIP(object):
 
     @staticmethod
     def print_to_log(str):
-        with open('../results/ip_report.log', 'a') as f:
+        with open('../results/ip_report_Feb.log', 'a') as f:
             f.write(str + '\n')
 
     @staticmethod
     def print_to_error(str):
-        with open('../results/ip_error.log', 'a') as f:
+        with open('../results/ip_error_Feb.log', 'a') as f:
             f.write('Error Warning: %s \n' % str)
 
 

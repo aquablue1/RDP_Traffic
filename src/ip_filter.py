@@ -11,6 +11,21 @@ import time
 from src.ip_lookup import ResearchIP
 from src.records import SingleRecord, HourlyRecord, DailyRecord
 
+
+def merge_dict(dict1, dict2):
+    """
+    Merge dict2 to dict1.
+    :param dict1:
+    :param dict2:
+    :return:
+    """
+    for key2 in dict2.keys():
+        if key2 in dict1.keys():
+            dict1[str(key2)] += int(dict2[str(key2)])
+        else:
+            dict1[str(key2)] = int(dict2[str(key2)])
+    return dict1
+
 if __name__ == '__main__':
 
     data_dict = {}
@@ -18,7 +33,9 @@ if __name__ == '__main__':
     log_folder = '../data/ip_filter/'
     output_folder = './data/results_ip_filter/'
     for filename in os.listdir(log_folder):
-        print(filename)
+        # print(filename)
+        if ("2018-02" not in filename):
+            continue
         with open('../data/ip_filter/%s' % filename) as f:
             # Generate the descriptor for a daily data.
             daily = DailyRecord(filename)
@@ -38,12 +55,15 @@ if __name__ == '__main__':
 
     # GET the suspicious IP addresses in each hour
     ip_to_lookup = []
+    victim_ip_dict = {}
     for daily in data_dict.values():
         for hour in daily.daily_record.keys():
             ip_to_lookup += daily.daily_record[hour].get_suspicious_ip_list()
+            # victim_ip_dict = merge_dict(victim_ip_dict, daily.daily_record[hour].get_victim_ip_dict())
     ip_to_lookup_uniq = set(ip_to_lookup)
     print(ip_to_lookup_uniq)
     print(len(ip_to_lookup_uniq))
+    # print(sorted(victim_ip_dict.values()))
 
     # match them in both BASIC and ABUSE IP database.
 

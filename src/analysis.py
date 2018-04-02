@@ -49,6 +49,6 @@ if __name__ == '__main__':
         plt.plot(range(start, start + len(monthly_count_dict[month])), monthly_count_dict[month])
         start += len(monthly_count_dict[month])
 
-    plt.xlabel("Date (Hour).")
+    plt.xlabel("Time (Hour).")
     plt.ylabel("# of sessions per hour.")
     plt.show()

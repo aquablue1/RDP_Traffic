@@ -48,6 +48,9 @@ class SingleRecord(object):
     def get_ip_dest(self):
         return self.ip_dest
 
+    def get_count(self):
+        return int(self.count)
+
     def is_suspicious(self):
         if self.count > 10:
             return True
@@ -82,6 +85,30 @@ class HourlyRecord(object):
             if record.is_suspicious():
                 suspicious_list.append(record.get_ip_source())
         return suspicious_list
+
+    def get_victim_ip_list(self):
+        """
+        Return all victim IP records in this Hourly Record, as list.
+        :return:
+        """
+        victim_list = []
+        for record in self.record_list:
+            if record.is_suspicious():
+                victim_list.append(record.get_ip_dest())
+        return victim_list
+
+    def get_victim_ip_dict(self):
+        """
+        Return all victim IP records in this Hourly Record, as dict with value as the # been attacked.
+        :return:
+        """
+        victim_dict = {}
+        for record in self.record_list:
+            if record.is_suspicious():
+                victim_dict[str(record.get_ip_dest())] = record.get_count()
+        # print("victim_dict %s" % victim_dict)
+        return victim_dict
+
 
     def insert_single_record(self, single_record):
         """
